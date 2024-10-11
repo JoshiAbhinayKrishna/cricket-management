@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Overview</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Team Overview</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+        </ul>
+    </nav>
+    <main>
+        <form id="teamForm">
+            <label for="teamName">Enter Team Name:</label>
+            <input type="text" id="teamName" name="teamName">
+            <button type="submit">Get Overview</button>
+        </form>
+        <div id="teamOverview"></div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#teamForm').submit(function (event) {
+                event.preventDefault();
+                var teamName = $('#teamName').val();
+                fetchTeamOverview(teamName);
+            });
+
+            function fetchTeamOverview(teamName) {
+                $.ajax({
+                    url: 'https://factory-apis.herokuapp.com/api/cricket/team',
+                    type: 'GET',
+                    data: {
+                        name: teamName
+                    },
+                    success: function (response) {
+                        console.log('Team Overview:', response);
+                        displayTeamOverview(response);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        alert('Error fetching team overview.');
+                    }
+                });
+            }
+
+            function displayTeamOverview(teamData) {
+                var teamOverviewHtml = '<h2>Team Overview: ' + teamData.name + '</h2>';
+                teamOverviewHtml += '<h3>Next Fixtures</h3>';
+                teamOverviewHtml += '<ul>';
+                teamData.fixtures.content.forEach(function (fixture) {
+                    // Display fixture details
+                    teamOverviewHtml += '<li>' + fixture.match + '</li>';
+                });
+                teamOverviewHtml += '</ul>';
+
+                teamOverviewHtml += '<h3>Previous Results</h3>';
+                teamOverviewHtml += '<ul>';
+                teamData.results.content.forEach(function (result) {
+                    // Display result details
+                    teamOverviewHtml += '<li>' + result.match + '</li>';
+                });
+                teamOverviewHtml += '</ul>';
+
+                teamOverviewHtml += '<h3>Team Rankings</h3>';
+                teamOverviewHtml += '<p>T20I Ranking: ' + teamData.ranking[0].t20i + '</p>';
+                teamOverviewHtml += '<p>ODI Ranking: ' + teamData.ranking[1].odi + '</p>';
+                teamOverviewHtml += '<p>Test Ranking: ' + teamData.ranking[2].test + '</p>';
+
+                $('#teamOverview').html(teamOverviewHtml);
+            }
+        });
+    </script>
+</body>
+</html>

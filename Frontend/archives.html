@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Archived Matches</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="archiveMatches"></div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            fetchArchiveMatches();
+
+            function fetchArchiveMatches() {
+                $.ajax({
+                    url: 'https://api.cricapi.com/v1/matches',
+                    type: 'GET',
+                    data: {
+                        apikey: '1bc81f5c-919b-46d9-a59e-732747cfab35',
+                        offset: 0
+                    },
+                    success: function (response) {
+                        console.log('Archive Matches:', response);
+                        displayArchiveMatches(response.data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        alert('Error fetching archive matches.');
+                    }
+                });
+            }
+
+            function displayArchiveMatches(matches) {
+                var archiveMatchesHtml = '<h2>Matches in Archives</h2>';
+                archiveMatchesHtml += '<ul>';
+                matches.forEach(function (match) {
+                    if (match.matchStarted) {
+                        archiveMatchesHtml += '<li>';
+                        archiveMatchesHtml += '<strong>' + match.name + '</strong>';
+                        archiveMatchesHtml += '<p>Match Type: ' + match.matchType + '</p>';
+                        archiveMatchesHtml += '<p>Venue: ' + match.venue + '</p>';
+                        archiveMatchesHtml += '<p>Date: ' + match.date + '</p>';
+                        archiveMatchesHtml += '<p>Status: ' + match.status + '</p>';
+                        archiveMatchesHtml += '</li>';
+                    }
+                });
+                archiveMatchesHtml += '</ul>';
+                $('#archiveMatches').html(archiveMatchesHtml);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+/* Styles for header */
+header {
+    background-color: rgb(125, 17, 28);
+    color: #f0eeed;
+    padding: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Styles for navigation */
+main {
+    background-color: rgb(125, 17, 28);
+    padding: 10px 20px;
+    text-align: center;
+}
+
+main form {
+    display: inline-block;
+}
+
+main label {
+    color: #fff;
+    margin-right: 10px;
+}
+
+main input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+main button {
+    padding: 5px 10px;
+    background-color: #1710d8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+nav ul {
+    list-style-type: none;
+    padding: 20px;
+    background-color: rgb(125, 17, 28);
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-style: italic;
+    color: #dce2e4;
+    font-weight: bold;
+}
+
+/* Styles for footer */
+footer {
+    background-color: rgb(125, 17, 28);
+    padding: 5px;
+    color: #fff;
+    font-style: italic;
+}
+h1{
+    font-weight: bolder;
+}

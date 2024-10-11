@@ -1,0 +1,28 @@
+body{
+    background-color: rgb(253, 245, 245);
+}
+img{
+    size:100px 200px;
+    display: inline-flex;
+    padding: 20px;
+}
+h2{
+    text-align: center;
+    font-style: italic;
+}
+div{
+    align-self: center;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    padding:5px 50px;
+  }
+  h1{
+    text-align: center;
+    font-style: italic;
+    background-color: rgb(125, 17, 28);
+    
+    color: #f0eeed;
+    padding: 20px;
+  }

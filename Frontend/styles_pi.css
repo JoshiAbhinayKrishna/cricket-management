@@ -1,0 +1,127 @@
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Header styles */
+header {
+    background-color: rgb(125, 17, 28);
+    color: #f0eeed;
+    padding: 20px;
+    text-align: center;
+    font-style: italic;
+}
+h1{
+    font-weight: bolder;
+}
+/* Navigation styles */
+nav {
+    background-color: rgb(125, 17, 28);
+    
+    padding: 10px 20px;
+    text-align: center;
+}
+
+nav form {
+    display: inline-block;
+}
+
+nav label {
+    color: #fff;
+    margin-right: 10px;
+    font-style: italic;
+}
+
+nav input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+nav button {
+    padding: 5px 10px;
+    background-color: #1710d8;
+    color: #fff;
+    font-style: italic;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+/* Player info styles */
+#playerInfo {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#playerInfo h2 {
+    margin-bottom: 10px;
+}
+
+#playerInfo p {
+    margin-bottom: 5px;
+}
+
+#playerInfo img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#playerInfo h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#playerInfo table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#playerInfo th, #playerInfo td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+#playerInfo th {
+    background-color: #f2f2f2;
+}
+
+#playerInfo tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.player-info {
+    width: 50%; /* Adjust the width as needed */
+    margin: 0 auto; /* This will center the div horizontally */
+    text-align: center; /* This will center the content inside the div */
+    background-color: rgb(226, 230, 231);
+    font-style: italic;
+}
+.player-stats{
+    text-align: center;
+    font-style: italic;
+}
+
+/* Footer styles */
+footer {
+    background-color: rgb(125, 17, 28);
+    font-style: italic;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}

@@ -1,0 +1,37 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid black; /* Border for the entire table */
+}
+header {
+    background-color: rgb(125, 17, 28);
+    color: #f0eeed;
+    padding: 20px;
+    font-style: italic;
+    text-align: center;
+
+}
+h2{
+    text-align: center;
+}
+th{
+   background-color: rgb(19, 89, 154);
+   color: beige;
+   border: 1px solid black; /* Border for each cell */
+    padding: 8px;
+    font-style: italic;
+    text-align: center;
+    border-color: black;
+}
+td{
+    background-color: rgb(249, 239, 223);
+    border: 1px solid black;
+    padding: 10px;
+    font-style: italic;
+    text-align: center;
+    border-color: black;
+}
+tr {
+    border-bottom: 1px solid black; /* Border for each row */
+}
+

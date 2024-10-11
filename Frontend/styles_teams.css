@@ -1,0 +1,47 @@
+/* styles_teams.css */
+
+h1 {
+    text-align: center;
+    font-style: italic;
+    background-color: rgb(125, 17, 28);
+    color: #f0eeed;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.container {
+    width: 20%; 
+    height: 40px; 
+    background: rgba(247, 175, 175, 0.861); 
+    margin: 30px auto;
+    position: relative; /* Add position relative */
+}
+
+.arrow-right {
+    width: 0; 
+    height: 0; 
+    border-top: 20px solid transparent; /* Adjust the size of the arrow */
+    border-bottom: 20px solid transparent; /* Adjust the size of the arrow */
+    border-left: 20px solid rgba(247, 175, 175, 0.861); /* Adjust the color of the arrow */
+    position: absolute; /* Change to absolute positioning */
+    right: -20px; /* Move the arrow to the right */
+    top: 50%; /* Position the arrow in the middle vertically */
+    transform: translateY(-50%); /* Center the arrow vertically */
+}
+
+li {
+    font-family: cursive;
+    color: black;
+    text-align: center;
+}
+

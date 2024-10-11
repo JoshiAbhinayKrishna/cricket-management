@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to Cricket Management System</h1>
+    </header>
+    <nav>
+        <ul>
+            
+            <li><a href="team-schedule.html">Team Schedule</a></li>
+            
+            <li><a href="colorful-facts.html">Colorful Facts</a></li>
+            <li><a href="players-info.html">Players Info</a></li>
+            
+            <li><a href="https://www.icc-cricket.com/rankings#mens-team-rankings">ICC Rankings</a></li>
+            <li><a href="grounds.html">Grounds Info</a></li>
+            <li><a href="teams.html">Teams Achievements</a></li>
+        </ul>
+    </nav>
+    <div id="liveMatches" ></div>
+    <footer>
+        <p>&copy; 2024 Cricket Management System</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Fetch live matches data
+            $.ajax({
+                url: 'https://api.cricapi.com/v1/currentMatches',
+                type: 'GET',
+                data: {
+                    apikey: 'ca21588f-bc9c-4995-9dd1-f7abcecd8b4d',
+                    offset: 0
+                },
+                success: function (response) {
+                    console.log('API Response:', response);
+                    if (response && response.status === 'success' && response.data && response.data.length > 0) {
+                        displayLiveMatches(response.data);
+                    } else {
+                        $('#liveMatches').html('<p>No live matches available.</p>');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                    $('#liveMatches').html('<p>Error fetching live matches.</p>');
+                }
+            });
+
+            function displayLiveMatches(matches) {
+                var html = '<h2>Live Matches</h2>';
+                html += '<ul>';
+                matches.forEach(function (match) {
+                    html+='<div class="scorecard"';
+                    html += '<li>';
+                    html += '<span>';
+                    html += '<img src="' + match.teamInfo[0].img + '" alt="' + match.teams[0] + '" width="24">';
+                    html += '<strong span>' + match.teams[0] + '</strong></span>';
+                    html += '<strong span> vs </strong></span>';
+                    html += '<img src="' + match.teamInfo[1].img + '" alt="' + match.teams[1] + '" width="24">';
+                    html += '<strong span>' + match.teams[1] + '</strong></span>';
+                    html += '</span>';
+                    if (match.score) {
+                        html += '<p>Scorecard:</p>';
+                        match.score.forEach(function (score) {
+                            html += '<p>' + score.inning + ': ' + score.r + '/' + score.w + ' (' + score.o + ' overs)</p>';
+                        });
+                    } else {
+                        html += '<p>No scorecard available yet.</p>';
+                    }
+                    html += '<p id="format">' + match.matchType + '</p>';
+                    html += '<p>' + match.venue + '</p>';
+                    html += '<p>' + match.status + '</p>';
+                    html += '</li>';
+                    html+='</div>';
+                });
+                html += '</ul>';
+                $('#liveMatches').html(html);
+            }
+        });
+    </script>
+    <style>
+        strong{
+            font-size:medium;
+            color: rgb(11, 10, 10);
+            font-family: cursive;
+        }
+        .scorecard{
+            background-color: rgb(226, 230, 231);
+            max-width: 400px;
+            flex:1;
+            
+            border-radius: 5px;
+        }
+        p{
+            font-family: cursive;
+            color: rgb(11, 10, 10);
+            font-size: medium;
+        }
+        #format{
+            background-color: rgb(111, 81, 4);
+            margin-right: 1160px;
+            size: 20px 10px;
+        }
+        #format p{
+            color: black;
+        }
+        h2{
+            text-align: center;
+        }
+    </style>
+</body>
+</html>

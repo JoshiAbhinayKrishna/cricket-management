@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Scorecard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Match Scorecard</h1>
+    </header>
+    <div id="scorecard"></div>
+    <button onclick="goBack()">Back</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var matchId = urlParams.get('matchId');
+
+            // Fetch match scorecard data
+            $.ajax({
+                url: 'https://api.cricapi.com/v1/match_scorecard',
+                type: 'GET',
+                data: {
+                    apikey: '1bc81f5c-919b-46d9-a59e-732747cfab35',
+                    id: matchId
+                },
+                success: function (response) {
+                    console.log('Scorecard Response:', response);
+                    displayScorecard(response.data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                    $('#scorecard').html('<p>Error fetching scorecard.</p>');
+                }
+            });
+        });
+
+        function displayScorecard(scorecardData) {
+            var html = '<h2>Batting Scorecard</h2>';
+            html += '<table>';
+            html += '<tr><th>Name</th><th>Dismissal</th><th>Score</th><th>4s</th><th>6s</th><th>SR</th></tr>';
+            scorecardData.forEach(function (inning) {
+                inning.batting.forEach(function (batter) {
+                    html += '<tr>';
+                    html += '<td>' + batter.batsman.name + '</td>';
+                    html += '<td>' + batter['dismissal-text'] + '</td>';
+                    html += '<td>' + batter.r + ' (' + batter.b + ')</td>';
+                    html += '<td>' + batter['4s'] + '</td>';
+                    html += '<td>' + batter['6s'] + '</td>';
+                    html += '<td>' + batter.sr + '</td>';
+                    html += '</tr>';
+                });
+            });
+            html += '</table>';
+
+            html += '<h2>Bowling Scorecard</h2>';
+            html += '<table>';
+            html += '<tr><th>Name</th><th>Overs</th><th>Runs</th><th>Wickets</th><th>Maidens</th><th>Econ</th><th>NB</th><th>WD</th></tr>';
+            scorecardData.forEach(function (inning) {
+                inning.bowling.forEach(function (bowler) {
+                    html += '<tr>';
+                    html += '<td>' + bowler.bowler.name + '</td>';
+                    html += '<td>' + bowler.o + '-' + bowler.m + '-' + bowler.r + '-' + bowler.w + '</td>';
+                    html += '<td>' + bowler.r + '</td>';
+                    html += '<td>' + bowler.w + '</td>';
+                    html += '<td>' + bowler.m + '</td>';
+                    html += '<td>' + bowler.eco + '</td>';
+                    html += '<td>' + bowler.nb + '</td>';
+                    html += '<td>' + bowler.wd + '</td>';
+                    html += '</tr>';
+                });
+            });
+            html += '</table>';
+
+            $('#scorecard').html(html);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

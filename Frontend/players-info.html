@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Information</title>
+    <link rel="stylesheet" href="styles_pi.css">
+</head>
+<body>
+    <header>
+        <h1>Player Information</h1>
+    </header>
+    <nav>
+        <form id="searchForm">
+            <label for="playerName">Search Player:</label>
+            <input type="text" id="playerName" name="playerName">
+            <button type="submit">Search</button>
+        </form>
+    </nav>
+    <main>
+        <div id="playerInfo"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Cricket Management System</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts_p.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (e) {
+                e.preventDefault();
+                var playerName = $('#playerName').val();
+                getPlayerInfo(playerName);
+            });
+
+            function getPlayerInfo(playerName) {
+                $.ajax({
+                    url: 'https://api.cricapi.com/v1/players',
+                    type: 'GET',
+                    data: {
+                        apikey: 'ca21588f-bc9c-4995-9dd1-f7abcecd8b4d',
+                        offset: 0,
+                        search: playerName
+                    },
+                    success: function (response) {
+                        console.log('API Response:', response);
+                        if (response && response.status === 'success' && response.data && response.data.length > 0) {
+                            var playerId = response.data[0].id;
+                            getPlayerDetails(playerId);
+                        } else {
+                            $('#playerInfo').html('<p>No player found with that name.</p>');
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        $('#playerInfo').html('<p>Error fetching player information.</p>');
+                    }
+                });
+            }
+
+            function getPlayerDetails(playerId) {
+                $.ajax({
+                    url: 'https://api.cricapi.com/v1/players_info',
+                    type: 'GET',
+                    data: {
+                        apikey: 'ca21588f-bc9c-4995-9dd1-f7abcecd8b4d',
+                        id: playerId
+                    },
+                    success: function (response) {
+                        console.log('API Response:', response);
+                        displayPlayerInfo(response);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        $('#playerInfo').html('<p>Error fetching player information.</p>');
+                    }
+                });
+            }
+
+            function displayPlayerInfo(data) {
+                var playerInfo = $('#playerInfo');
+                playerInfo.empty();
+                
+                if (data && data.status === 'success' && data.data) {
+                    var player = data.data;
+                    var html = '<div class="player-info">';
+                    html += '<h2>' + player.name + '</h2>';
+                    html += '<img src="' + player.playerImg + '" alt="' + player.name + '">';
+                    html += '<p>Date of Birth: ' + player.dateOfBirth + '</p>';
+                    html += '<p>Role: ' + player.role + '</p>';
+                    html += '<p>Batting Style: ' + player.battingStyle + '</p>';
+                    html += '<p>Bowling Style: ' + player.bowlingStyle + '</p>';
+                    html += '<p>Place of Birth: ' + player.placeOfBirth + '</p>';
+                    html += '<p>Country: ' + player.country + '</p>';
+                    html += '</div>';
+            
+                    // Add player stats
+                    html += '<div class="player-stats">';
+                    html += '<h3>Player Stats</h3>';
+                    if (player.stats && player.stats.length > 0) {
+                        html += '<table>';
+                        player.stats.forEach(function (stat) {
+                            html += '<tr><th colspan="2">' + stat.matchtype + '</th></tr>';
+                            for (var key in stat) {
+                                if (stat.hasOwnProperty(key) && key !== 'matchtype') {
+                                    html += '<tr><td>' + key + '</td><td>' + stat[key] + '</td></tr>';
+                                }
+                            }
+                        });
+                        html += '</table>';
+                    } else {
+                        html += '<p>No stats available.</p>';
+                    }
+                    html += '</div>';
+            
+                    playerInfo.html(html);
+                } else {
+                    playerInfo.html('<p>No player information found.</p>');
+                }
+            }
+            
+            
+        });
+    </script>
+</body>
+</html>
